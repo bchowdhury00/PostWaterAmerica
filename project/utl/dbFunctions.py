@@ -9,7 +9,9 @@ from sqlite3 import connect, Row
 #creates the tables users and topics
 def create():
     # Setup the database
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     db.row_factory = Row
     c = db.cursor()
@@ -22,7 +24,9 @@ def create():
 
 #Adds a user to the users table given user's input
 def addUser(username,displayName,password):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     c.execute("INSERT INTO users VALUES (?, ?, ?)", (str(username), str(displayName), str(password)))
@@ -30,7 +34,9 @@ def addUser(username,displayName,password):
     db.close()
 
 def addBlog(blogTopic, entry, creator):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT MAX(blogNumber) FROM blogs")
@@ -48,10 +54,11 @@ def addBlog(blogTopic, entry, creator):
 
 #checks if the login creditionals are valid
 def checkUser(username, password):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
-
     if checkUsername(username):
         cur = c.execute("SELECT password FROM users WHERE username = ?", (str(username),))
         userPassword = cur.fetchall()
@@ -68,7 +75,9 @@ def checkUser(username, password):
 
 
 def noRepeatBlogs(username,blogName):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT blogName FROM blogs WHERE creator = ?",(str(username),))
@@ -82,7 +91,9 @@ def noRepeatBlogs(username,blogName):
 
 #checks if username is taken
 def checkUsername(username):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT username FROM users")
@@ -96,7 +107,9 @@ def checkUsername(username):
 
 #checks if the displyname is taken
 def checkDisplayname(displayName):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT displayName FROM users")
@@ -110,7 +123,9 @@ def checkDisplayname(displayName):
 
 
 def showEntries(blognumber):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT entry FROM blogs WHERE blogNumber = ?",(int(blognumber),))
@@ -124,7 +139,9 @@ def showEntries(blognumber):
     return entries
 
 def getBlogNumber(username,blogtitle):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT blogNumber FROM blogs WHERE blogName = ? AND creator = ?",(str(blogtitle),str(username)))
@@ -135,7 +152,9 @@ def getBlogNumber(username,blogtitle):
     return num[0][0]
 
 def yourBlogs(username):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT blogName FROM blogs WHERE creator = ?",(str(username),))
@@ -150,7 +169,9 @@ def yourBlogs(username):
     return yourBlogs
 
 def createOtherBlogList(user):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT blogNumber,blogName FROM blogs WHERE creator != ?;", [str(user)])
@@ -158,7 +179,9 @@ def createOtherBlogList(user):
     return allBlogsButUser
 
 def get(ID, topic):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT * FROM blogs WHERE blogNumber == ? and blogName == ?;", [str(ID), str(topic)])
@@ -167,7 +190,9 @@ def get(ID, topic):
 
 # returns username givin displayname
 def getUsername(displayName):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT username FROM users WHERE displayName == ?;", [str(displayName),])
@@ -176,7 +201,9 @@ def getUsername(displayName):
 
 #returns displayname givin username
 def getDisplayname(username):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     cur = c.execute("SELECT displayName FROM users WHERE username == ?;", [str(username),])
@@ -184,7 +211,9 @@ def getDisplayname(username):
     return info[0]
 # create()
 def update(ID, topic, newEntry):
-    DB_FILE = "blogs.db"
+    DIR = os.path.dirname(__file__) or ‘.’
+    DIR += ‘/’
+    DB_FILE = DIR + "blogs.db"
     db = connect(DB_FILE)
     c = db.cursor()
     print(ID)
